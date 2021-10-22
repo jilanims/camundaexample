@@ -4,6 +4,8 @@
 https://www.summit58.co/post/camunda-platform-performance-at-scale
 
 
+**Camunda run - AngularJS**
+https://github.com/nikku/run-camunda#readme
 
 
 **Camunda user Task, pre and post listeners**
