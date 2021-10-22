@@ -1,5 +1,10 @@
 # camundaexample
 
+
+**Camunda plugins for Camunda Modeler:**
+https://www.javanibble.com/plugins-for-camunda-modeler/
+
+
 **#Camunda Performance of Job Executor:**
 https://www.summit58.co/post/camunda-platform-performance-at-scale
 
