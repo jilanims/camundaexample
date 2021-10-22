@@ -1,5 +1,11 @@
 # camundaexample
 
+**#Camunda Performance of Job Executor:**
+https://www.summit58.co/post/camunda-platform-performance-at-scale
+
+
+
+
 **Camunda user Task, pre and post listeners**
 
 https://github.com/camunda/camunda-bpm-examples/tree/master/process-engine-plugin/bpmn-parse-listener-on-user-task
