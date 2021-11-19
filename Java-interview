@@ -8,3 +8,8 @@ Spring Cloud Patterns
  - Circuit Breaker (Hystrix)
  - Intelligent Routing (Zuul) 
  - Client Side Load Balancing (Ribbon)
+ 
+ 
+ Service Discovery (Eureka)
+  - https://howtodoinjava.com/spring-cloud/spring-cloud-service-discovery-netflix-eureka/
+
