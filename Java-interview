@@ -18,3 +18,7 @@ Spring Cloud Patterns
   Intelligent Routing (Zuul)
    -  https://howtodoinjava.com/spring-cloud/spring-cloud-api-gateway-zuul/
 
+
+
+Zipkin and Slauth:
+ -  https://howtodoinjava.com/spring-cloud/spring-cloud-zipkin-sleuth-tutorial/
