@@ -12,4 +12,8 @@ Spring Cloud Patterns
  
  Service Discovery (Eureka)
   - https://howtodoinjava.com/spring-cloud/spring-cloud-service-discovery-netflix-eureka/
+  
+  Consul Service Discovery - > https://howtodoinjava.com/spring-cloud/consul-service-registration-discovery/
+  
+  
 
