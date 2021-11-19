@@ -15,5 +15,6 @@ Spring Cloud Patterns
   
   Consul Service Discovery - > https://howtodoinjava.com/spring-cloud/consul-service-registration-discovery/
   
-  
+  Intelligent Routing (Zuul)
+   -  https://howtodoinjava.com/spring-cloud/spring-cloud-api-gateway-zuul/
 
