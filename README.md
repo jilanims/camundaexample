@@ -1,5 +1,8 @@
 # camundaexample
 
+** Camunda 7.13 example with Hikari:**
+https://github.com/aravindhrs/camunda-springboot-postgres/blob/master/pom.xml
+
 
 **Camunda plugins for Camunda Modeler:**
 https://www.javanibble.com/plugins-for-camunda-modeler/
