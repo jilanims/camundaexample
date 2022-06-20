@@ -1,5 +1,8 @@
 # camundaexample
 
+**Camunda authorization**:
+https://smartstack.medium.com/camunda-authorizations-by-group-via-rest-cb9c747eb863
+
 **Camunda 7.13 example with Hikari:**
 https://github.com/aravindhrs/camunda-springboot-postgres/blob/master/pom.xml
 
