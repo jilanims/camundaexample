@@ -1,0 +1,7 @@
+/Users/jilanipa/camunda/jp-camunda-example/camundaexample/modify-workflow/src/main/java/com/camunda/workflow/delegate/ReloadDelegate.java
+/Users/jilanipa/camunda/jp-camunda-example/camundaexample/modify-workflow/src/main/java/com/camunda/workflow/delegate/TaskDelegate.java
+/Users/jilanipa/camunda/jp-camunda-example/camundaexample/modify-workflow/src/main/java/com/camunda/workflow/rest/WorkflowController.java
+/Users/jilanipa/camunda/jp-camunda-example/camundaexample/modify-workflow/src/main/java/com/camunda/workflow/Application.java
+/Users/jilanipa/camunda/jp-camunda-example/camundaexample/modify-workflow/src/main/java/com/camunda/workflow/listener/SkipTaskListener.java
+/Users/jilanipa/camunda/jp-camunda-example/camundaexample/modify-workflow/src/main/java/com/camunda/workflow/listener/SkipExecutionListener.java
+/Users/jilanipa/camunda/jp-camunda-example/camundaexample/modify-workflow/src/main/java/com/camunda/workflow/model/WorkflowRequestModel.java

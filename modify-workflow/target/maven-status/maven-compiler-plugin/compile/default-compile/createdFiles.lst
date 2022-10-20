@@ -1,0 +1,7 @@
+com/camunda/workflow/Application.class
+com/camunda/workflow/model/WorkflowRequestModel.class
+com/camunda/workflow/listener/SkipExecutionListener.class
+com/camunda/workflow/delegate/TaskDelegate.class
+com/camunda/workflow/delegate/ReloadDelegate.class
+com/camunda/workflow/rest/WorkflowController.class
+com/camunda/workflow/listener/SkipTaskListener.class

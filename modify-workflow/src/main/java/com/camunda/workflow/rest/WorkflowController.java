@@ -1,4 +1,4 @@
-package com.charter.workflow.rest;
+package com.camunda.workflow.rest;
 
 import java.util.List;
 
@@ -6,14 +6,13 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
 
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.runtime.ActivityInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.charter.workflow.model.WorkflowRequestModel;
+import com.camunda.workflow.model.WorkflowRequestModel;
 
 @RestController
 @RequestMapping("/workflow/modify")

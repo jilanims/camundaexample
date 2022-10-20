@@ -1,4 +1,4 @@
-package com.charter.workflow.model;
+package com.camunda.workflow.model;
 
 import java.util.Map;
 

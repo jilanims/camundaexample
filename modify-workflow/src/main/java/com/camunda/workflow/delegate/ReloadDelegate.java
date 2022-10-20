@@ -1,4 +1,4 @@
-package com.charter.workflow.delegate;
+package com.camunda.workflow.delegate;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -6,20 +6,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-
 @Component
-public class TaskDelegate implements JavaDelegate{
+public class ReloadDelegate implements JavaDelegate{
 	
-	final static Logger logger = LoggerFactory.getLogger(TaskDelegate.class);
+	final static Logger logger = LoggerFactory.getLogger(ReloadDelegate.class);
 	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		String taskName = (String) execution.getVariable("activities");
+		String taskName = (String) execution.getVariable("reload");
 		
-		if(taskName!=null && taskName.equalsIgnoreCase(execution.getCurrentActivityName())) {
+		logger.info("ReloadDelegate task started for "+execution.getCurrentActivityName());
+		if(taskName!=null && taskName.equals("non-pay-account-task-1")) {
 			taskName = (String)execution.getVariable("task");
 			logger.info("TaskName:"+taskName);
-			// business logic
 		}
 		
 	}
