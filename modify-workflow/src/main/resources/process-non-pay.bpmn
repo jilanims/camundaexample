@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_B0ppIPFYEeOlke_H2tkzCA" targetNamespace="http://camunda.org/examples" exporter="Camunda Modeler" exporterVersion="5.0.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:collaboration id="Collaboration_017deya">
+    <bpmn2:participant id="Participant_0hlqtt5" name="Non-Pay Example" processRef="nonpay" />
+  </bpmn2:collaboration>
+  <bpmn2:process id="nonpay" name="Non-Pay Process" isExecutable="true">
+    <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="UserTask_1" targetRef="EndEvent_2" />
+    <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="UserTask_2" targetRef="EndEvent_1" />
+    <bpmn2:sequenceFlow id="SequenceFlow_4" name="is no holiday" sourceRef="ExclusiveGateway_1" targetRef="UserTask_2">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${isHoliday!="true"}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="is holiday" sourceRef="ExclusiveGateway_1" targetRef="UserTask_1">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${isHoliday=="true"}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="externalTask1" />
+    <bpmn2:startEvent id="StartEvent_1" name="start with date">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="Flow_1dzcqe9" sourceRef="externalTask1" targetRef="externalTask2" />
+    <bpmn2:serviceTask id="ServiceTask_1" name="Check if date is holiday" camunda:asyncBefore="true">
+      <bpmn2:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">
+              <camunda:script scriptFormat="javascript">var status = execution.getVariable('restApiStatus');
+var a ='http://localhost:8083/users?';
+if(status==null){
+	a = a+'restApiStatus=error';
+}else{
+	a = a+'restApiStatus='+status;
+}
+a;</camunda:script>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:outputParameter name="statusCode">${statusCode}</camunda:outputParameter>
+            <camunda:outputParameter name="isHoliday">true</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:executionListener event="end">
+          <camunda:script scriptFormat="JavaScript">
+if(statusCode != 200){
+ throw new org.camunda.bpm.engine.delegate.BpmnError("500-ERROR", "Repo can't be downloaded");
+}</camunda:script>
+        </camunda:executionListener>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>Flow_1seac35</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:boundaryEvent id="Event_0x8b5az" attachedToRef="ServiceTask_1">
+      <bpmn2:outgoing>Flow_0qeyu6m</bpmn2:outgoing>
+      <bpmn2:errorEventDefinition id="ErrorEventDefinition_0n48psm" errorRef="Error_1m48bfw" />
+    </bpmn2:boundaryEvent>
+    <bpmn2:sequenceFlow id="Flow_1seac35" sourceRef="externalTask2" targetRef="ServiceTask_1" />
+    <bpmn2:serviceTask id="externalTask1" name="Task1" camunda:type="external" camunda:topic="scoreProvider2">
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:incoming>Flow_1t31wjx</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1dzcqe9</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:serviceTask id="externalTask2" name="Task2" camunda:type="external" camunda:topic="loanGranter2">
+      <bpmn2:incoming>Flow_1dzcqe9</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1seac35</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="Flow_0qeyu6m" sourceRef="Event_0x8b5az" targetRef="Activity_1q6uhd3" />
+    <bpmn2:sequenceFlow id="Flow_1t31wjx" sourceRef="Activity_1q6uhd3" targetRef="externalTask1" />
+    <bpmn2:userTask id="Activity_1q6uhd3" name="Operations team">
+      <bpmn2:incoming>Flow_0qeyu6m</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1t31wjx</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ServiceTask_1" targetRef="ExclusiveGateway_1" />
+    <bpmn2:endEvent id="EndEvent_2">
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:endEvent id="EndEvent_1">
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:userTask id="UserTask_2" name="Pack for work">
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="UserTask_1" name="Pack for holiday">
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+  </bpmn2:process>
+  <bpmn2:error id="Error_1m48bfw" name="500-ERROR" errorCode="500-ERROR" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_017deya">
+      <bpmndi:BPMNShape id="Participant_0hlqtt5_di" bpmnElement="Participant_0hlqtt5" isHorizontal="true">
+        <dc:Bounds x="120" y="59" width="960" height="501" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2">
+        <di:waypoint x="650" y="221" />
+        <di:waypoint x="766" y="221" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t31wjx_di" bpmnElement="Flow_1t31wjx">
+        <di:waypoint x="690" y="390" />
+        <di:waypoint x="690" y="430" />
+        <di:waypoint x="270" y="430" />
+        <di:waypoint x="270" y="261" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qeyu6m_di" bpmnElement="Flow_0qeyu6m">
+        <di:waypoint x="620" y="279" />
+        <di:waypoint x="620" y="350" />
+        <di:waypoint x="640" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1seac35_di" bpmnElement="Flow_1seac35">
+        <di:waypoint x="500" y="221" />
+        <di:waypoint x="550" y="221" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dzcqe9_di" bpmnElement="Flow_1dzcqe9">
+        <di:waypoint x="350" y="221" />
+        <di:waypoint x="400" y="221" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_4" targetElement="Activity_0vfjqx8_di">
+        <di:waypoint x="218" y="221" />
+        <di:waypoint x="250" y="221" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ExclusiveGateway_7" targetElement="_BPMNShape_UserTask_6">
+        <di:waypoint x="791" y="196" />
+        <di:waypoint x="791" y="122" />
+        <di:waypoint x="866" y="122" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="768" y="171" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_ExclusiveGateway_7" targetElement="_BPMNShape_UserTask_7">
+        <di:waypoint x="791" y="246" />
+        <di:waypoint x="791" y="326" />
+        <di:waypoint x="866" y="326" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="776" y="334" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="_BPMNShape_UserTask_7" targetElement="_BPMNShape_EndEvent_4">
+        <di:waypoint x="966" y="326" />
+        <di:waypoint x="1016" y="326" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_UserTask_6" targetElement="_BPMNShape_EndEvent_5">
+        <di:waypoint x="966" y="122" />
+        <di:waypoint x="1016" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_4" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="203" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="166" y="244" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_17" bpmnElement="ServiceTask_1">
+        <dc:Bounds x="550" y="181" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vfjqx8_di" bpmnElement="externalTask1">
+        <dc:Bounds x="250" y="181" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16xqh7d_di" bpmnElement="externalTask2">
+        <dc:Bounds x="400" y="181" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hroy93_di" bpmnElement="Activity_1q6uhd3">
+        <dc:Bounds x="640" y="310" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_5" bpmnElement="EndEvent_2">
+        <dc:Bounds x="1016" y="104" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_1">
+        <dc:Bounds x="1016" y="308" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_7" bpmnElement="UserTask_2">
+        <dc:Bounds x="866" y="286" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_6" bpmnElement="UserTask_1">
+        <dc:Bounds x="866" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_7" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+        <dc:Bounds x="766" y="196" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xt6jfy_di" bpmnElement="Event_0x8b5az">
+        <dc:Bounds x="602" y="243" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

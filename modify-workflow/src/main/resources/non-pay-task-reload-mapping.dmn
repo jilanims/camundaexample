@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="TaskReload" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
+  <decision id="TaskReloadDecision" name="TaskMapping">
+    <decisionTable id="DecisionTable_0kmju9j">
+      <input id="Input_1" label="operation">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>operation</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="activities" name="activities" typeRef="string" />
+      <rule id="DecisionRule_0sq9ueq">
+        <inputEntry id="UnaryTests_11vfctj">
+          <text>"Customer"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00k2ka3">
+          <text>"non-pay-customer-task-1"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1qgt1c6">
+        <inputEntry id="UnaryTests_1ozyyl0">
+          <text>"Account"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14pjya9">
+          <text>"non-pay-account-task-1"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0b09505">
+        <inputEntry id="UnaryTests_1xnokon">
+          <text>"Service"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0vtx7nj">
+          <text>"non-pay-service-task-1"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0sv1bis">
+        <inputEntry id="UnaryTests_1k40zcr">
+          <text>"Decision"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1n4x5bf">
+          <text>"non-pay-customer-task-4"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="TaskReloadDecision">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
